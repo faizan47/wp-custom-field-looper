@@ -13,7 +13,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 defined( 'ABSPATH' ) or die( 'Nope, not accessing this' );
 
 
-$query = new WP_Query( array( 'post_type' => 'fine', 'post_status'=>'publish' ) );
+$query = new WP_Query( array( 'post_type' => 'fine', 'post_status'=>'publish',  'posts_per_page' => -1, ) );
 
 function count_fines() { 
   global $query;
@@ -21,7 +21,7 @@ function count_fines() {
 		$total_fine = 0;
 		while ( $query->have_posts() ) {
 				$query->the_post();
-				$total_fine = $total_fine + get_post_meta( get_the_id(), 'fine_usd_equivalent', true );
+        $total_fine = $total_fine + get_post_meta( get_the_id(), 'fine_usd_equivalent', true );
         }
     
     $total_fine = number_format($total_fine);
@@ -34,7 +34,6 @@ add_shortcode('total_fine', 'count_fines');
 
 function count_posts(){
       global $query;
-      $query = new WP_Query( array( 'post_type' => 'fine', 'post_status'=>'publish' ) );
       return $query->found_posts;
 }
 add_shortcode('number_of_fines', 'count_posts');
