@@ -14,17 +14,17 @@ defined( 'ABSPATH' ) or die( 'Nope, not accessing this' );
 
 
 function count_fines() { 
- 	$query = new WP_Query( array( 'post_type' => 'fine' ) );
+ 	$query = new WP_Query( array( 'post_type' => 'fine', 'post_status'=>'publish' ) );
 	if ( $query->have_posts() ) {
 		$total_fine = 0;
 		while ( $query->have_posts() ) {
 				$query->the_post();
 				$total_fine = $total_fine + get_post_meta( get_the_id(), 'fine_usd_equivalent', true );
-    }
-
-    wp_reset_postdata();
+        }
+    
+    $post_count =  $query->found_posts;
     $total_fine = number_format($total_fine);
-    $post_count =  $query->post_count;
+    wp_reset_postdata();
     }
     
     $message = "{$post_count} fines equalling a total of USD {$total_fine}"; 
