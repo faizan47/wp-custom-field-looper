@@ -19,9 +19,9 @@ function get_Query(){
 function count_fines() { 
   $query = get_Query();
   if ( $query->have_posts() ) {
-		$total_fine = 0;
-		while ( $query->have_posts() ) {
-				$query->the_post();
+        $total_fine = 0;
+        while ( $query->have_posts() ) {
+                $query->the_post();
         $total_fine = $total_fine + get_post_meta( get_the_id(), 'fine_usd_equivalent', true );
         }
     
@@ -38,4 +38,3 @@ function count_posts(){
       return $query->found_posts;
 }
 add_shortcode('number_of_fines', 'count_posts');
-
