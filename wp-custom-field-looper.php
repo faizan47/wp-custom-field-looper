@@ -12,11 +12,12 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 defined( 'ABSPATH' ) or die( 'Nope, not accessing this' );
 
-
-$query = new WP_Query( array( 'post_type' => 'fine', 'post_status'=>'publish',  'posts_per_page' => -1, ) );
+function get_Query(){
+  return new WP_Query( array( 'post_type' => 'fine', 'post_status'=>'publish',  'posts_per_page' => -1, ) );
+}
 
 function count_fines() { 
-  global $query;
+  $query = get_Query();
   if ( $query->have_posts() ) {
 		$total_fine = 0;
 		while ( $query->have_posts() ) {
@@ -33,7 +34,7 @@ function count_fines() {
 add_shortcode('total_fine', 'count_fines');
 
 function count_posts(){
-      global $query;
+      $query = get_Query();
       return $query->found_posts;
 }
 add_shortcode('number_of_fines', 'count_posts');
